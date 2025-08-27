@@ -1,24 +1,17 @@
 const express = require ("express")
 const mongoose = require ("mongoose")
-const cors = require ("cors")
 require("dotenv").config()
 
+PORT = process.env.PORT || 3000
 
 const app = express()
-app.use(cors())
-app.use(express.json())
 
-app.get("/", (req,res)=>{
-    res.send("Hello from backend")
-})
 
 mongoose.connect(process.env.Sphere).then(()=>{
-    console.log("Database Connection Successful")
-    app.listen(2000,()=>{
-        console.log("Server runnin on port 2000")
+    console.log("DB connected suucessfully")
+    app.listen(PORT, ()=>{
+        console.log("Server running in port ",PORT)
     })
-}
-).catch(()=>{
-    console.error("Connection failed")
+}).catch(()=>{
+    console.log("DB not connected")
 })
-
