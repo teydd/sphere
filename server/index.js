@@ -2,10 +2,13 @@ const express = require ("express")
 const mongoose = require ("mongoose")
 require("dotenv").config()
 
+const auth = require("./routes/authRoutes")
+
 PORT = process.env.PORT || 3000
 
 const app = express()
 
+app.use("/",auth)
 
 mongoose.connect(process.env.Sphere).then(()=>{
     console.log("DB connected suucessfully")
