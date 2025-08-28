@@ -38,4 +38,32 @@ const signup = async (req,res)=>{
     }
 }
 
-module.exports= {signup}
+const verify = async(req,res)=>{
+    const {code} = req.body
+    try {
+        const user = await User.findOne({
+            verificationToken:code
+        })
+        if(!user){
+            return res.status(400).json({
+                message:"Invalid code"
+            })
+        }
+
+        user.isVerified = true
+        user.verificationToken = undefined
+
+        await user.save()
+
+        res.status(200).json({
+            success:true,
+            message:"Verified succesfully",
+            ...user._doc,
+            password:undefined
+        })
+    } catch (error) {
+        console.log("Error verifying user")        
+    }
+}
+
+module.exports= {signup,verify}
