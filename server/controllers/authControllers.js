@@ -120,4 +120,38 @@ const forgotPassword = async(req,res)=>{
         console.log("Error in forgot password")        
     }
 }
-module.exports= {signup,verify,signin,logout,forgotPassword}
+
+const resetPassword = async (req,res)=>{
+    try {
+        const {token} = req.params
+    const {password} = req.body
+
+        const user = await User.findOne({
+            resetPasswordToken : token,
+            resetPasswordTokenExpiresAt:{$gt:Date.now()}
+        }) 
+        
+        if(!user){
+            return res.status(400).json({message:"Invalid or expired reset token"})
+        }
+
+        const hashedpassword = await bcrypt.hash(password,12)
+
+        user.password = hashedpassword
+        user.resetPasswordToken = undefined
+        user.resetPasswordTokenExpiresAt = undefined
+
+        await user.save()
+
+        res.status(200).json({
+            success:true,
+            message:"Password changed successfully",
+            ...user._doc,
+            password:undefined
+        })
+    } catch (error) {
+        console.log("Error in reset password")
+        res.status(400).json({success:false, message:error.message})        
+    }
+}
+module.exports= {signup,verify,signin,logout,forgotPassword,resetPassword}
