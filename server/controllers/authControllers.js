@@ -66,4 +66,29 @@ const verify = async(req,res)=>{
     }
 }
 
-module.exports= {signup,verify}
+const signin = async(req,res)=>{
+    const {email,password} = req.body
+
+    try {
+        const user = await User.findOne({email})
+        if(!user){
+            return res.status(400).json({message:"User does not exist"})
+        }
+
+        const comparepassword = await bcrypt.compare(password,user.password)
+        if(!comparepassword){
+            return res.status(400).json({message:"Invalid password"})
+        }
+
+        await user.save()
+        generateTokeAndCookie(res,user)
+
+        res.status(200).json({
+            success:true,
+            message:"Sign in successful"
+        })
+    } catch (error) {
+        console.log("Error signing in")        
+    }
+}
+module.exports= {signup,verify,signin}
