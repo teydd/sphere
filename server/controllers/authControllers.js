@@ -91,4 +91,9 @@ const signin = async(req,res)=>{
         console.log("Error signing in")        
     }
 }
-module.exports= {signup,verify,signin}
+
+const logout = async(req,res)=>{
+    res.clearCookie("token")
+    res.status(200).json({message:"Logout successful"})
+}
+module.exports= {signup,verify,signin,logout}
