@@ -115,7 +115,10 @@ const forgotPassword = async(req,res)=>{
 
         await user.save()
 
-        res.status(200).json({message:"Link sent successfully"})
+        res.status(200).json({
+            message:"Link sent successfully",
+            ...user._doc,
+            password:undefined})
     } catch (error) {
         console.log("Error in forgot password")        
     }
@@ -154,4 +157,27 @@ const resetPassword = async (req,res)=>{
         res.status(400).json({success:false, message:error.message})        
     }
 }
-module.exports= {signup,verify,signin,logout,forgotPassword,resetPassword}
+
+const checkAuth = async(req,res)=>{
+    try {
+        const user = await User.findById(req.userId)
+        if(!user){
+            return res.status(400).json({
+                message:"User not found"
+            })
+        }
+
+        res.status(200).json({
+            success:true,
+            ...user._doc,
+            password:undefined
+        })
+    } catch (error) {
+        console.log("Error checking authentication")
+        res.status(400).json({
+            message:error.message
+        })     
+    }
+
+}
+module.exports= {signup,verify,signin,logout,forgotPassword,resetPassword,checkAuth}
