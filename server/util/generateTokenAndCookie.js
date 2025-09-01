@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const generateTokeAndCookie = async (res, user) => {
-  const token = jwt.sign({ user: user._id, role: user.role }, process.env.JWT, {
+  const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT, {
     expiresIn: "2d",
   });
 
