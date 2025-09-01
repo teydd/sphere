@@ -1,28 +1,19 @@
-const jwt = require("jsonwebtoken")
+const jwt = require ("jsonwebtoken")
 
-const verifyToken = async(req,res,next)=>{
-    const token = res.cookies.token
+const verifyToken = async (req,res,next)=>{
+    const token = req.cookies.token
     if(!token){
-        return res.status(401).json({
-            message:"Unauthorised - no token provided"
-        })
+        return res.status(400).json({message:"Unauthorised - no token provided"})
     }
-    try {
-        const decode = jwt.verify(token,process.env.JWT)
-        if(!decode){
-            return res.status(401).json({
-                message:"Unauthorised - invalid token"
-            })
-        }
 
-        req.userId = decode.userId
+    try {
+        const {userId} = jwt.verify(token,process.env.JWT)
+        req.userId = userId
         next()
     } catch (error) {
-        console.log("Error verifying token")
-        res.status(400).json({
-            message:"Server error"
-        })       
+        console.log("Error checking auth")
+        res.status(400).json({message : error.message})        
     }
 }
 
-module.exports= {verifyToken}
+module.exports = {verifyToken}
