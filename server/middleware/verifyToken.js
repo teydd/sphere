@@ -9,8 +9,9 @@ const verifyToken = async (req, res, next) => {
   }
 
   try {
-    const { userId } = jwt.verify(token, process.env.JWT);
+    const { userId,role } = jwt.verify(token, process.env.JWT);
     req.userId = userId;
+    req.role = role
     next();
   } catch (error) {
     console.log("Error checking auth");
@@ -18,4 +19,13 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
-module.exports = { verifyToken };
+const isAdmin = async(req,res,next)=>{
+  if(!req.role || req.role != "admin"){
+    return res.status(400).json({
+      message:"Forbidden - admin access required"
+    })
+  }
+  next()
+}
+
+module.exports = { verifyToken,isAdmin };
