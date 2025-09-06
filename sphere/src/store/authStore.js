@@ -1,2 +1,3 @@
 import {create} from "zustand"
-import axios from "axi"
+import axios from "axios"
+
