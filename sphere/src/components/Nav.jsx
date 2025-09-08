@@ -3,10 +3,10 @@ import React from "react";
 export default function Nav() {
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
           <a className="navbar-brand" href="/world">
-            Sphere
+            
           </a>
           <button
             className="navbar-toggler"
@@ -19,14 +19,22 @@ export default function Nav() {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/world">
-                  World Map
+          <div className="collapse navbar-collapse " id="navbarNav">
+            <ul className="navbar-nav align-items-center justify-content-center w-100">
+              <li className="nav-item ">
+                <a className="nav-link active title" aria-current="page" href="/">
+                <i className="fs-1 text-white">
+                  Sphere
+                </i>
                 </a>
-              </li>
+              </li>              
             </ul>
+            
+                <a className="nav-link active title ailgn-items-center text-center" aria-current="page" href="/login">
+                <i className=" text-white">
+                  Login
+                </i>
+                </a>
           </div>
         </div>
       </nav>
