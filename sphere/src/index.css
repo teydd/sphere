@@ -1,5 +1,14 @@
 body{
-    background: linear-gradient(160deg, black , white);
+    background: linear-gradient(160deg, rgb(43, 157, 209) , white);
     background-repeat: no-repeat;
     height: 100vh;
+}
+
+.title{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.modal{
+    position: absolute;
+    z-index: 9999 !important;
 }
