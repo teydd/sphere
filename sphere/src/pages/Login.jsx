@@ -3,29 +3,20 @@ import React from 'react'
 export default function Login() {
   return (
     <>
-    
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Launch static backdrop modal
-</button>
-
-
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
-      </div>
-    </div>
-  </div>
-</div>
+    <div className="container bg-whit mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
+      <p className="text-center pt-3">
+        Sign in to continue
+      </p>
+      <hr />
+      <form>
+        <input className='form-control' type="text" name="" id="" placeholder='Email'/> <br />
+         <input className='form-control' type="text" name="" id="" placeholder='Password'/><br />
+         <a className='nav-link text-center' href="/forgot-password">Forgot Password?</a><hr />
+         <button className='btn btn-outline-dark w-100'>Submit</button><hr />
+         <p className='text-center'>Don't have an account? <a className='text-black text-decoration-none' href="/signup">Sign up</a></p>
+      </form>
+      <br />
+    </div>   
     </>
   )
 }
