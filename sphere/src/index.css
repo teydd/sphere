@@ -8,7 +8,6 @@ body{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-.modal{
-    position: absolute;
-    z-index: 9999 !important;
+.form{
+    background: rgba(44, 43, 43, 0.212);
 }
