@@ -5,6 +5,7 @@ import Nav from "./components/Nav"
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import ForgotPassword from './pages/ForgotPassword';
 function App() {
   
 
@@ -15,6 +16,7 @@ function App() {
         <Route path='/' element={<Home></Home>}></Route>
         <Route path='/signin' element={<Login></Login>}></Route>
         <Route path='/signup' element={<Signup></Signup>}></Route>
+        <Route path='/forgot-password' element={<ForgotPassword></ForgotPassword>}></Route>
       </Routes>
     </Router>      
     </>
