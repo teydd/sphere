@@ -33,7 +33,7 @@ export default function Nav() {
             <a
               className="nav-link active title ailgn-items-center text-center"
               aria-current="page"
-              href="/login"
+              href="/signin"
             >
               <i className=" text-white">Login</i>
             </a>
