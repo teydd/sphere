@@ -4,6 +4,9 @@ export default function Signup() {
   return (
     <>
       <div className="container bg-whit mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
+        <div className=" text-center">
+          <a className='text-decoration-none text-black lead fw-bold' href="/">Sphere</a>
+        </div>
         <p className="text-center pt-3">Sign up to continue</p>
         <hr />
         <form>
