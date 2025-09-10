@@ -24,12 +24,12 @@ const WeatherGlobe = () => {
       const locations = [
         { city: "New York", lat: 40.7128, lng: -74.006 },
         { city: "London", lat: 51.5074, lng: -0.1278 },
-        { city: "Nairobi", lat: -1.2921, lng: 36.8219 }
+        { city: "Nairobi", lat: -1.2921, lng: 36.8219 },
       ];
 
       try {
         const responses = await Promise.all(
-          locations.map(loc =>
+          locations.map((loc) =>
             axios.get(
               `https://api.openweathermap.org/data/2.5/weather?lat=${loc.lat}&lon=${loc.lng}&units=metric&appid=${apiKey}`
             )
@@ -41,7 +41,7 @@ const WeatherGlobe = () => {
           temp: `${Math.round(res.data.main.temp)}°C`,
           feels: `${Math.round(res.data.main.feels_like)}°C`,
           humidity: `${res.data.main.humidity}%`,
-          condition: res.data.weather[0].description
+          condition: res.data.weather[0].description,
         }));
 
         setCities(weatherData);
@@ -51,13 +51,13 @@ const WeatherGlobe = () => {
           .pointAltitude(0.2)
           .pointRadius(0.6)
           .pointColor(() => "orange")
-          .pointLabel(d => `${d.city}: ${d.temp}`);
+          .pointLabel((d) => `${d.city}: ${d.temp}`);
 
         globe
           .labelsData(weatherData)
-          .labelLat(d => d.lat)
-          .labelLng(d => d.lng)
-          .labelText(d => `${d.city} ${d.temp}`)
+          .labelLat((d) => d.lat)
+          .labelLng((d) => d.lng)
+          .labelText((d) => `${d.city} ${d.temp}`)
           .labelSize(1.5)
           .labelColor(() => "yellow")
           .labelAltitude(0.2);
@@ -77,7 +77,7 @@ const WeatherGlobe = () => {
       {/* 🌍 Globe */}
       <div
         ref={globeRef}
-        style={{ width: "100%", height: "100%", background: "black", }}
+        style={{ width: "100%", height: "100%", background: "black" }}
       />
 
       {/* ✅ Navbar Overlay */}
@@ -87,7 +87,7 @@ const WeatherGlobe = () => {
           top: 0,
           left: 0,
           width: "100%",
-          zIndex:1
+          zIndex: 1,
         }}
       >
         <Nav />
@@ -107,7 +107,7 @@ const WeatherGlobe = () => {
             borderRadius: "8px",
             zIndex: 2,
             width: "300px",
-            textAlign: "center"
+            textAlign: "center",
           }}
         >
           <h2>{selectedCity.city}</h2>
@@ -124,7 +124,7 @@ const WeatherGlobe = () => {
               borderRadius: "4px",
               background: "orange",
               color: "black",
-              cursor: "pointer"
+              cursor: "pointer",
             }}
           >
             Close
