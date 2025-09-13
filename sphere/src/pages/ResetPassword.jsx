@@ -17,7 +17,14 @@ export default function ResetPassword() {
             type="text"
             name=""
             id=""
-            placeholder="Email"
+            placeholder="Password"
+          />{" "}
+          <input
+            className="form-control"
+            type="text"
+            name=""
+            id=""
+            placeholder="Confirm Password"
           />{" "}
           <hr />
           <button className="btn btn-outline-dark w-100">Submit</button>
