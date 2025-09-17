@@ -29,7 +29,12 @@ export default function Nav() {
                 </a>
               </li>
             </ul>
-            <a className="btn bg-white border border-white  text-black float-end" href="/signin">Signin</a>
+            <a
+              className="btn bg-white border border-white  text-black float-end"
+              href="/signin"
+            >
+              Signin
+            </a>
           </div>
         </div>
       </nav>
