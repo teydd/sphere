@@ -1,23 +1,23 @@
 import React, { use, useState } from "react";
 
 export default function Login() {
-  const [form,setForm] = useState({
-      email:"",
-      password:""
-    })
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
 
-    const handleSubmit = (e)=>{
-      e.preventDefault()
-      console.log("Submitted",form)
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submitted", form);
+  };
 
-    const handleOnchange = (e)=>{
-      const {name,value} = e.target
-      setForm((prev)=>({
-        ...prev,
-        [name]:value
-      }))
-    }
+  const handleOnchange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
   return (
     <>
       <div className="container bg-whit mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
