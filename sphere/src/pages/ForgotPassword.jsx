@@ -1,6 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function ForgotPassword() {
+  const [form,setForm] = useState({
+    email:""
+  })
+  const handleSubmit = (e)=>{
+    e.preventDefault()
+    console.log("Submitted",form)
+  }
+  const handleOnchange = (e)=>{
+    const{name,value} = e.target
+    setForm((prev)=>({
+      ...prev,
+      [name]:value
+    }))
+  }
   return (
     <div className="container bg-whit mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
       <div className=" text-center">
@@ -10,12 +24,13 @@ export default function ForgotPassword() {
       </div>
       <p className="text-center pt-3">Enter your email</p>
       <hr />
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
           className="form-control"
-          type="text"
-          name=""
-          id=""
+          type="email"
+          name="email"
+          value={form.email}
+          onChange={handleOnchange}
           placeholder="Email"
         />{" "}
         <hr />
