@@ -1,6 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function ResetPassword() {
+  const [form,setForm] = useState({
+    password:"",
+    confirmpass:""
+  })
+
+  const handleSubmit = (e)=>{
+    e.preventDefault()
+    console.log("Submited",form)
+  }
+
+  const handleOnchange = (e)=>{
+    const {name,value} =  e.target
+    setForm((prev)=>({
+      ...prev,
+      [name]:value
+    }))
+  }
   return (
     <>
       <div className="container bg-whit mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
@@ -11,19 +28,22 @@ export default function ResetPassword() {
         </div>
         <p className="text-center pt-3">Enter new password</p>
         <hr />
-        <form>
+        <form onSubmit={handleSubmit}>
           <input
             className="form-control"
-            type="text"
-            name=""
-            id=""
+            type="password"
+            name="password"
+            value={form.password}
+            onChange={handleOnchange}
             placeholder="Password"
           />{" "}
+          <br />
           <input
             className="form-control"
-            type="text"
-            name=""
-            id=""
+            type="password"
+            name="confirmpass"
+            value={form.confirmpass}
+            onChange={handleOnchange}
             placeholder="Confirm Password"
           />{" "}
           <hr />
