@@ -1,6 +1,23 @@
-import React from "react";
+import React, { use, useState } from "react";
 
 export default function Login() {
+  const [form,setForm] = useState({
+      email:"",
+      password:""
+    })
+
+    const handleSubmit = (e)=>{
+      e.preventDefault()
+      console.log("Submitted",form)
+    }
+
+    const handleOnchange = (e)=>{
+      const {name,value} = e.target
+      setForm((prev)=>({
+        ...prev,
+        [name]:value
+      }))
+    }
   return (
     <>
       <div className="container bg-whit mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
@@ -11,20 +28,22 @@ export default function Login() {
         </div>
         <p className="text-center pt-3">Sign in to continue</p>
         <hr />
-        <form>
+        <form onSubmit={handleSubmit}>
           <input
             className="form-control"
-            type="text"
-            name=""
-            id=""
+            type="email"
+            name="email"
+            value={form.email}
+            onChange={handleOnchange}
             placeholder="Email"
           />{" "}
           <br />
           <input
             className="form-control"
-            type="text"
-            name=""
-            id=""
+            type="password"
+            name="password"
+            value={form.password}
+            onChange={handleOnchange}
             placeholder="Password"
           />
           <br />
