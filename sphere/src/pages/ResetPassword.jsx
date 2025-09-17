@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 
 export default function ResetPassword() {
-  const [form,setForm] = useState({
-    password:"",
-    confirmpass:""
-  })
+  const [form, setForm] = useState({
+    password: "",
+    confirmpass: "",
+  });
 
-  const handleSubmit = (e)=>{
-    e.preventDefault()
-    console.log("Submited",form)
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submited", form);
+  };
 
-  const handleOnchange = (e)=>{
-    const {name,value} =  e.target
-    setForm((prev)=>({
+  const handleOnchange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
       ...prev,
-      [name]:value
-    }))
-  }
+      [name]: value,
+    }));
+  };
   return (
     <>
       <div className="container bg-whit mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
