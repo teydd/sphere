@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 
 export default function Signup() {
-  const [form,setForm] = useState({
-    email:"",
-    password:"",
-    name:"",    
-  })
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    name: "",
+  });
 
-  const handleSubmit = (e)=>{
-    e.preventDefault()
-    console.log("Submitted",form)
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submitted", form);
+  };
 
-  const handleOnchange = (e)=>{
-    const {name,value} = e.target
-    setForm((prev)=>({
+  const handleOnchange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
       ...prev,
-      [name]:value
-    }))
-  }
+      [name]: value,
+    }));
+  };
   return (
     <>
       <div className="container bg-whit mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
