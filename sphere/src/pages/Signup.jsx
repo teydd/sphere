@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useAuthStore } from "../store/authStore";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [form, setForm] = useState({
@@ -6,10 +8,21 @@ export default function Signup() {
     password: "",
     name: "",
   });
+  const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const {signup,error} = useAuthStore()
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    const {email,password,name} = form
+    try {
+      await signup(email,password,name)
+      navigate("/verify")
+    } catch (error) {
+      console.log(error)
+    }
     console.log("Submitted", form);
+    
   };
 
   const handleOnchange = (e) => {
@@ -23,9 +36,7 @@ export default function Signup() {
     <>
       <div className="container bg-whit mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
         <div className=" text-center">
-          <a className="text-decoration-none text-black lead fw-bold" href="/">
-            Sphere
-          </a>
+          <Link className="text-decoration-none text-black lead fw-bold" to={"/"}>Sphere</Link>
         </div>
         <p className="text-center pt-3">Sign up to continue</p>
         <hr />
@@ -56,14 +67,13 @@ export default function Signup() {
             onChange={handleOnchange}
             placeholder="Password"
           />
+          {error && <p className="text-info">{error}</p>}
           <hr />
           <button className="btn btn-outline-dark w-100">Submit</button>
           <hr />
           <p className="text-center">
             Already have an account?{" "}
-            <a className="text-black text-decoration-none" href="/signin">
-              Sign in
-            </a>
+            <Link className="text-black text-decoration-none" to={"/signin"}>signin</Link>
           </p>
         </form>
         <br />
