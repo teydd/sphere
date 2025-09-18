@@ -1,4 +1,5 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [form, setForm] = useState({
@@ -22,9 +23,7 @@ export default function Login() {
     <>
       <div className="container bg-whit mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
         <div className=" text-center">
-          <a className="text-decoration-none text-black lead fw-bold" href="/">
-            Sphere
-          </a>
+          <Link className="text-decoration-none text-black lead fw-bold" to={"/"}>Sphere</Link>
         </div>
         <p className="text-center pt-3">Sign in to continue</p>
         <hr />
@@ -47,17 +46,13 @@ export default function Login() {
             placeholder="Password"
           />
           <br />
-          <a className="nav-link text-center" href="/forgot-password">
-            Forgot Password?
-          </a>
+          <Link className="nav-link text-center" to={"/forgot-password"}>Forgot Password?</Link>
           <hr />
           <button className="btn btn-outline-dark w-100">Submit</button>
           <hr />
           <p className="text-center">
             Don't have an account?{" "}
-            <a className="text-black text-decoration-none" href="/signup">
-              Sign up
-            </a>
+            <Link className="text-black text-decoration-none" to={"/signup"}>Signup</Link>
           </p>
         </form>
         <br />
