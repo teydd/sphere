@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import Verify from "./pages/Verify";
 function App() {
   return (
     <>
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Home></Home>}></Route>
           <Route path="/signin" element={<Login></Login>}></Route>
           <Route path="/signup" element={<Signup></Signup>}></Route>
+          <Route path="/verify" element={<Verify></Verify>}></Route>
           <Route
             path="/forgot-password"
             element={<ForgotPassword></ForgotPassword>}
