@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function ForgotPassword() {
   const [form, setForm] = useState({
@@ -18,9 +19,7 @@ export default function ForgotPassword() {
   return (
     <div className="container bg-whit mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
       <div className=" text-center">
-        <a className="text-decoration-none text-black lead fw-bold" href="/">
-          Sphere
-        </a>
+        <Link className="text-decoration-none text-black lead fw-bold" to={"/"}>Sphere</Link>
       </div>
       <p className="text-center pt-3">Enter your email</p>
       <hr />
