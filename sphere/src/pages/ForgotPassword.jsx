@@ -19,7 +19,9 @@ export default function ForgotPassword() {
   return (
     <div className="container bg-whit mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
       <div className=" text-center">
-        <Link className="text-decoration-none text-black lead fw-bold" to={"/"}>Sphere</Link>
+        <Link className="text-decoration-none text-black lead fw-bold" to={"/"}>
+          Sphere
+        </Link>
       </div>
       <p className="text-center pt-3">Enter your email</p>
       <hr />
