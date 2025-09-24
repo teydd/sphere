@@ -34,7 +34,7 @@ export default function Signup() {
   };
   return (
     <>
-      <div className="container bg-whit mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
+      <div className="container mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
         <div className=" text-center">
           <Link className="text-decoration-none text-black lead fw-bold" to={"/"}>Sphere</Link>
         </div>
@@ -67,7 +67,7 @@ export default function Signup() {
             onChange={handleOnchange}
             placeholder="Password"
           />
-          {error && <p className="text-info">{error}</p>}
+          {error && <p className="text-black">{error}</p>}
           <hr />
           <button className="btn btn-outline-dark w-100">Submit</button>
           <hr />
