@@ -214,13 +214,25 @@ const WeatherGlobe = () => {
   };
 
   return (
-    <div className="" style={{ position: "relative", width: "100vw", height: "100vh" }}>
-      <div className=""
+    <div
+      className=""
+      style={{ position: "relative", width: "100vw", height: "100vh" }}
+    >
+      <div
+        className=""
         ref={globeRef}
         style={{ width: "100%", height: "100%", background: "black" }}
       />
 
-      <div style={{ position: "absolute", top: 0, left: 0, width: "100%", zIndex: 1 }}>
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          zIndex: 1,
+        }}
+      >
         <Nav />
       </div>
 
@@ -236,16 +248,14 @@ const WeatherGlobe = () => {
         }}
       >
         <div style={{ display: "flex", gap: "5px" }}>
-          <input className="form-control"
+          <input
+            className="form-control"
             type="text"
             placeholder="Search city..."
             value={searchCity}
             onChange={handleChange}
           />
-          <button
-            onClick={handleSearchSubmit}
-            className="btn btn-info"
-          >
+          <button onClick={handleSearchSubmit} className="btn btn-info">
             Search
           </button>
         </div>
