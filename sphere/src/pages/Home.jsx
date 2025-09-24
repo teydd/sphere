@@ -7,8 +7,8 @@ const WeatherGlobe = () => {
   const globeRef = useRef();
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState(null);
-  const [searchCity, setSearchCity] = useState(""); 
-  const globeInstance = useRef(null); 
+  const [searchCity, setSearchCity] = useState("");
+  const globeInstance = useRef(null);
   const apiKey = "3a5b06bae7471ab88a0e3f647fac9e55"; // 🔑 replace with your OpenWeatherMap key
 
   useEffect(() => {
@@ -66,7 +66,10 @@ const WeatherGlobe = () => {
 
         globe.onPointClick((city) => {
           setSelectedCity(city);
-          globe.pointOfView({ lat: city.lat, lng: city.lng, altitude: 1.5 }, 2000);
+          globe.pointOfView(
+            { lat: city.lat, lng: city.lng, altitude: 1.5 },
+            2000
+          );
         });
       } catch (err) {
         console.error("Error fetching base weather:", err);
@@ -104,7 +107,10 @@ const WeatherGlobe = () => {
               return updated;
             });
           } catch (err) {
-            console.error("User weather fetch error:", err.response?.data || err.message);
+            console.error(
+              "User weather fetch error:",
+              err.response?.data || err.message
+            );
           }
         });
       }
