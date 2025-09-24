@@ -6,7 +6,10 @@ import Nav from "../components/Nav";
 const WeatherGlobe = () => {
   const globeRef = useRef();
   const [cities, setCities] = useState([]);
-  const [selectedCity, setSelectedCity] = useState(null); // ✅ new
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [searchCity, setSearchCity] = useState(""); 
+  const globeInstance = useRef(null); 
+  const apiKey = "3a5b06bae7471ab88a0e3f647fac9e55"; // 🔑 replace with your OpenWeatherMap key
 
   useEffect(() => {
     const globe = Globe()(globeRef.current)
@@ -18,18 +21,17 @@ const WeatherGlobe = () => {
     globe.controls().autoRotate = true;
     globe.controls().autoRotateSpeed = 0.6;
 
+    globeInstance.current = globe;
+
+    const baseLocations = [
+      { city: "New York", lat: 40.7128, lng: -74.006 },
+      { city: "London", lat: 51.5074, lng: -0.1278 },
+    ];
+
     const fetchWeather = async () => {
-      const apiKey = "f19c8e0752f1f0c473b30272644f7833"; // ✅ wrap in quotes
-
-      const locations = [
-        { city: "New York", lat: 40.7128, lng: -74.006 },
-        { city: "London", lat: 51.5074, lng: -0.1278 },
-        { city: "Nairobi", lat: -1.2921, lng: 36.8219 },
-      ];
-
       try {
         const responses = await Promise.all(
-          locations.map((loc) =>
+          baseLocations.map((loc) =>
             axios.get(
               `https://api.openweathermap.org/data/2.5/weather?lat=${loc.lat}&lon=${loc.lng}&units=metric&appid=${apiKey}`
             )
@@ -37,7 +39,7 @@ const WeatherGlobe = () => {
         );
 
         const weatherData = responses.map((res, i) => ({
-          ...locations[i],
+          ...baseLocations[i],
           temp: `${Math.round(res.data.main.temp)}°C`,
           feels: `${Math.round(res.data.main.feels_like)}°C`,
           humidity: `${res.data.main.humidity}%`,
@@ -62,25 +64,101 @@ const WeatherGlobe = () => {
           .labelColor(() => "yellow")
           .labelAltitude(0.2);
 
-        // ✅ make cities clickable
-        globe.onPointClick(setSelectedCity);
+        globe.onPointClick((city) => {
+          setSelectedCity(city);
+          globe.pointOfView({ lat: city.lat, lng: city.lng, altitude: 1.5 }, 2000);
+        });
       } catch (err) {
-        console.error("Error fetching weather:", err);
+        console.error("Error fetching base weather:", err);
       }
     };
 
-    fetchWeather();
+    const fetchUserLocationWeather = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+
+          try {
+            const res = await axios.get(
+              `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=metric&appid=${apiKey}`
+            );
+
+            const userWeather = {
+              city: res.data.name || "Your Location",
+              lat,
+              lng,
+              temp: `${Math.round(res.data.main.temp)}°C`,
+              feels: `${Math.round(res.data.main.feels_like)}°C`,
+              humidity: `${res.data.main.humidity}%`,
+              condition: res.data.weather[0].description,
+            };
+
+            setCities((prev) => {
+              const updated = [...prev, userWeather];
+              globe.pointsData(updated);
+              globe.labelsData(updated);
+
+              globe.pointOfView({ lat, lng, altitude: 1.5 }, 2000);
+
+              return updated;
+            });
+          } catch (err) {
+            console.error("User weather fetch error:", err.response?.data || err.message);
+          }
+        });
+      }
+    };
+
+    fetchWeather().then(fetchUserLocationWeather);
   }, []);
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (!searchCity.trim()) return;
+
+    try {
+      const res = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&units=metric&appid=${apiKey}`
+      );
+
+      const cityWeather = {
+        city: res.data.name,
+        lat: res.data.coord.lat,
+        lng: res.data.coord.lon,
+        temp: `${Math.round(res.data.main.temp)}°C`,
+        feels: `${Math.round(res.data.main.feels_like)}°C`,
+        humidity: `${res.data.main.humidity}%`,
+        condition: res.data.weather[0].description,
+      };
+
+      setCities((prev) => {
+        const updated = [...prev, cityWeather];
+        globeInstance.current.pointsData(updated);
+        globeInstance.current.labelsData(updated);
+
+        globeInstance.current.pointOfView(
+          { lat: cityWeather.lat, lng: cityWeather.lng, altitude: 1.5 },
+          2000
+        );
+
+        return updated;
+      });
+
+      setSelectedCity(cityWeather);
+      setSearchCity("");
+    } catch (err) {
+      console.error("Search city error:", err.response?.data || err.message);
+    }
+  };
 
   return (
     <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
-      {/* 🌍 Globe */}
       <div
         ref={globeRef}
         style={{ width: "100%", height: "100%", background: "black" }}
       />
 
-      {/* ✅ Navbar Overlay */}
       <div
         style={{
           position: "absolute",
@@ -93,7 +171,45 @@ const WeatherGlobe = () => {
         <Nav />
       </div>
 
-      {/* ✅ Popup for selected city */}
+      <form
+        onSubmit={handleSearch}
+        style={{
+          position: "absolute",
+          top: "60px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 2,
+          display: "flex",
+          gap: "8px",
+        }}
+      >
+        <input
+          type="text"
+          placeholder="Search city..."
+          value={searchCity}
+          onChange={(e) => setSearchCity(e.target.value)}
+          style={{
+            padding: "8px",
+            borderRadius: "4px",
+            border: "1px solid #ccc",
+            width: "200px",
+          }}
+        />
+        <button
+          type="submit"
+          style={{
+            padding: "8px 12px",
+            borderRadius: "4px",
+            border: "none",
+            background: "orange",
+            color: "black",
+            cursor: "pointer",
+          }}
+        >
+          Search
+        </button>
+      </form>
+
       {selectedCity && (
         <div
           style={{
