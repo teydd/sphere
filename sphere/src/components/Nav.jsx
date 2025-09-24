@@ -18,10 +18,10 @@ export default function Nav() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse " id="navbarNav">
-            <ul className="navbar-nav align-items-center justify-content-center w-100">
+            <ul className="navbar-nav  w-100">
               <li className="nav-item ">
                 <Link
-                  className="fs-1 text-white title text-decoration-none"
+                  className="fs-1 text-white title text-decoration-none "
                   to={"/"}
                 >
                   Sphere
