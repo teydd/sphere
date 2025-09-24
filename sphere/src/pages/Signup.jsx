@@ -42,7 +42,9 @@ export default function Signup() {
             Sphere
           </Link>
         </div>
-        <p className="text-center pt-3">Sign up to continue</p>
+        <p className="text-center pt-3">Sign up to continue with</p>
+        <Link className="btn btn-outline-light w-100" to={"/google"}>Google</Link>
+        <p className="text-center">or</p>
         <hr />
         <form onSubmit={handleSubmit}>
           <input
