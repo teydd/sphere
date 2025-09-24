@@ -8,21 +8,20 @@ export default function Signup() {
     password: "",
     name: "",
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const {signup,error} = useAuthStore()
+  const { signup, error } = useAuthStore();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const {email,password,name} = form
+    const { email, password, name } = form;
     try {
-      await signup(email,password,name)
-      navigate("/verify")
+      await signup(email, password, name);
+      navigate("/verify");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
     console.log("Submitted", form);
-    
   };
 
   const handleOnchange = (e) => {
@@ -36,7 +35,12 @@ export default function Signup() {
     <>
       <div className="container mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
         <div className=" text-center">
-          <Link className="text-decoration-none text-black lead fw-bold" to={"/"}>Sphere</Link>
+          <Link
+            className="text-decoration-none text-black lead fw-bold"
+            to={"/"}
+          >
+            Sphere
+          </Link>
         </div>
         <p className="text-center pt-3">Sign up to continue</p>
         <hr />
@@ -73,7 +77,9 @@ export default function Signup() {
           <hr />
           <p className="text-center">
             Already have an account?{" "}
-            <Link className="text-black text-decoration-none" to={"/signin"}>signin</Link>
+            <Link className="text-black text-decoration-none" to={"/signin"}>
+              signin
+            </Link>
           </p>
         </form>
         <br />
