@@ -33,6 +33,7 @@ export default function ForgotPassword() {
           value={form.email}
           onChange={handleOnchange}
           placeholder="Email"
+          autoFocus
         />{" "}
         <hr />
         <button className="btn btn-outline-dark w-100">Submit</button>
