@@ -36,6 +36,7 @@ export default function ResetPassword() {
             value={form.password}
             onChange={handleOnchange}
             placeholder="Password"
+            autoFocus
           />{" "}
           <br />
           <input
