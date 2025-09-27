@@ -56,6 +56,7 @@ export default function Signup() {
             value={form.email}
             onChange={handleOnchange}
             placeholder="Email"
+            autoFocus
           />{" "}
           <br />
           <input
