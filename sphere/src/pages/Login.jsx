@@ -40,6 +40,7 @@ export default function Login() {
             value={form.email}
             onChange={handleOnchange}
             placeholder="Email"
+            autoFocus
           />{" "}
           <br />
           <input
