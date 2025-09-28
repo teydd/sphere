@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useAuthStore } from '../store/authStore';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 export default function Verify() {
   const [code, setCode] = useState("");
@@ -8,7 +8,7 @@ export default function Verify() {
   const { verify, error, isLoading } = useAuthStore();
 
   const handleChange = (e) => {
-    const value = e.target.value.replace(/\D/g, '').slice(0, 6);
+    const value = e.target.value.replace(/\D/g, "").slice(0, 6);
     setCode(value);
     if (value.length === 6) {
       handleVerify(value);
@@ -32,7 +32,9 @@ export default function Verify() {
   return (
     <div className="container mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
       <div className="text-center">
-        <Link className="text-decoration-none text-black lead fw-bold" to={"/"}>Sphere</Link>
+        <Link className="text-decoration-none text-black lead fw-bold" to={"/"}>
+          Sphere
+        </Link>
       </div>
       <p className="text-center pt-3">Enter verification code</p>
       <hr />
@@ -43,12 +45,17 @@ export default function Verify() {
           onChange={handleChange}
           maxLength={6}
           className="form-control text-center"
-          style={{ letterSpacing: "0.5em", fontSize: "1.5em", width: "180px", margin: "0 auto" }}
+          style={{
+            letterSpacing: "0.5em",
+            fontSize: "1.5em",
+            width: "180px",
+            margin: "0 auto",
+          }}
           autoFocus
         />
       </form>
       {error && <div className="text-danger text-center mt-2">{error}</div>}
       <br />
     </div>
-  )
+  );
 }
