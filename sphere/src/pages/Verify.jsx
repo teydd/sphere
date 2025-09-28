@@ -1,27 +1,31 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useAuthStore } from '../store/authStore';
 
 export default function Verify() {
   const [code, setCode] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { verify, error, isLoading } = useAuthStore();
 
   const handleChange = (e) => {
     const value = e.target.value.replace(/\D/g, '').slice(0, 6);
     setCode(value);
-    setError("");
-    // Auto-submit when 6 digits entered
     if (value.length === 6) {
-      handleSubmit(value);
+      handleVerify(value);
     }
   };
 
-  const handleSubmit = (enteredCode) => {
-    if (enteredCode === "123456") {
+  const handleVerify = async (code) => {
+    const success = await verify(code);
+    if (success) {
       navigate("/");
-    } else {
-      setError("Invalid code. Please try again.");
-      setCode("");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (code.length === 6) {
+      handleVerify(code);
     }
   };
 
@@ -32,13 +36,7 @@ export default function Verify() {
       </div>
       <p className="text-center pt-3">Enter verification code</p>
       <hr />
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          handleSubmit(code);
-        }}
-        className="text-center"
-      >
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={code}
@@ -46,9 +44,8 @@ export default function Verify() {
           maxLength={6}
           className="form-control text-center"
           style={{ letterSpacing: "0.5em", fontSize: "1.5em", width: "180px", margin: "0 auto" }}
-          autoFocu
+          autoFocus
         />
-        <button type="submit" className="btn btn-primary mt-3 w-100">Verify</button>
       </form>
       {error && <div className="text-danger text-center mt-2">{error}</div>}
       <br />
