@@ -1,15 +1,24 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
+import { safeLogger } from "../../utils/safelogger";
 
 export default function Login() {
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const {signin,isLoading,error} = useAuthStore()
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("Submitted", form);
+    const {email,password} = form
+    const success = await signin(email,password)
+    if(success){
+      navigate("/")
+    }
+    safeLogger("Form submitted:", form);
   };
 
   const handleOnchange = (e) => {
@@ -51,12 +60,16 @@ export default function Login() {
             onChange={handleOnchange}
             placeholder="Password"
           />
+          {error && <p className="text-danger">{error}</p>}
           <br />
           <Link className="nav-link text-center" to={"/forgot-password"}>
             Forgot Password?
           </Link>
           <hr />
-          <button className="btn btn-outline-dark w-100">Submit</button>
+          <button className="btn btn-outline-dark w-100" >
+  {isLoading ? "Signing in..." : "Sign in"}
+</button>
+
           <hr />
           <p className="text-center">
             Don't have an account?{" "}
