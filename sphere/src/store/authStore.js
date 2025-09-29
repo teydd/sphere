@@ -25,6 +25,7 @@ export const useAuthStore = create((set) => ({
         isAuthenticated: true,
         isLoading: false,
       });
+      return true
     } catch (error) {
       set({
         error: error.response.data.message || "Error signing up",
@@ -42,7 +43,7 @@ export const useAuthStore = create((set) => ({
         isAuthenticated: true,
         isLoading: false,
       });
-      return response.data;
+      return true;
     } catch (error) {
       set({ error: error.response.data.message } || "Error verifying email");
       throw error;
