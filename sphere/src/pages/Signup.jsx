@@ -10,14 +10,14 @@ export default function Signup() {
   });
   const navigate = useNavigate();
 
-  const { signup, error } = useAuthStore();
+  const { signup, error,isLoading } = useAuthStore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password, name } = form;
     try {
-      await signup(email, password, name);
-      navigate("/verify");
+      const success = await signup(email, password, name);
+if (success) navigate("/verify");
     } catch (error) {
       console.log(error);
     }
@@ -78,7 +78,10 @@ export default function Signup() {
           />
           {error && <p className="text-black">{error}</p>}
           <hr />
-          <button className="btn btn-outline-dark w-100">Submit</button>
+          <button className="btn btn-outline-dark w-100" disabled={isLoading}>
+  {isLoading ? "Creating account..." : "Submit"}
+</button>
+
           <hr />
           <p className="text-center">
             Already have an account?{" "}
