@@ -1,63 +1,53 @@
-import { create } from "zustand";
-import axios from "axios";
+import {create} from "zustand"
+import axios from "axios"
 
-const URL = "http://localhost:3000";
+const URL = "http://localhost:3000"
+axios.defaults.withCredentials = true
 
-axios.defaults.withCredentials = true;
-
-export const useAuthStore = create((set) => ({
-  user: null,
-  isAuthenticated: false,
-  error: null,
+export const useAuthStore = create((set)=>({
+  user:null,
+  error:null,
+  isAuthenticated:false,
   isLoading: false,
-  isCheckingAuth: true,
+  isCheckingAuth:true,
 
-  signup: async (email, password, name) => {
-    set({ isLoading: true, error: null });
+  signup: async(email,password,name)=>{
+    set({isLoading:true,error:null})
     try {
-      const response = await axios.post(`${URL}/signup`, {
-        email,
-        password,
-        name,
-      });
-      set({
-        user: response.data.user,
-        isAuthenticated: true,
-        isLoading: false,
-      });
-      return true;
+      const response = await axios.post(`${URL}/signup`,{email,password,name})
+      set({user:response.data.user,isAuthenticated:true,isLoading:false})
     } catch (error) {
-      set({
-        error: error.response.data.message || "Error signing up",
-        isLoading: false,
-      });
-      throw error;
+      set({error:error.response.data.message||"Error signing up",isLoading:false})
+      throw error      
     }
   },
-  verify: async (code) => {
-    set({ isLoading: true, error: null });
+  verify: async(code)=>{
+    set({isLoading:true,error:null})
     try {
-      const response = await axios.post(`${URL}/verify`, { code });
-      set({
-        user: response.data.user,
-        isAuthenticated: true,
-        isLoading: false,
-      });
-      return true;
+      const response = await axios.post(`${URL}/verify`,{code})
+      set({user:response.data.user, isLoading:false,isAuthenticated:true})
     } catch (error) {
-      set({ error: error.response.data.message } || "Error verifying email");
-      throw error;
+      set({error:"Error verifying user",isLoading:false})
+      throw error
     }
   },
   signin:async(email,password)=>{
     set({isLoading:true,error:null})
     try {
       const response = await axios.post(`${URL}/signin`,{email,password})
-      set({user:response.data.user, isAuthenticated:true,isLoading:false})
-      return true
+      set({user:response.data.user,isLoading:false,isAuthenticated:true})
     } catch (error) {
-      set({error:error.response.data.message || "Error signing in",isLoading:false}) 
-           
+      set({error:"Error signing in",isLoading:false})
+      throw error
     }
-  }
-}));
+  },
+  checkAuth:async()=>{
+    set({isCheckingAuth:true,error:null})
+    try {
+      const response = await axios.get(`${URL}/auth`)
+      set({user:response.data.user, isAuthenticated:true,isCheckingAuth:false})
+    } catch (error) {
+      set({error:null,isCheckingAuth:false,isAuthenticated:false})      
+    }
+  },
+}))
