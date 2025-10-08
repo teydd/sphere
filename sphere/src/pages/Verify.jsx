@@ -1,34 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
+import {toast }from "react-hot-toast";
 
 export default function Verify() {
-  const [code, setCode] = useState("");
-  const navigate = useNavigate();
-  const { verify, error, isLoading } = useAuthStore();
+  const [code,setCode] = useState("")
+  const {verify,error} = useAuthStore()
+  const navigate = useNavigate()
 
-  const handleChange = (e) => {
-    const value = e.target.value.replace(/\D/g, "").slice(0, 6);
-    setCode(value);
-    if (value.length === 6) {
-      handleVerify(value);
+  useEffect(()=>{
+    if(code.length === 6){
+      handleSubmit()
     }
-  };
+  },[code])
+  const handleChange = (e)=>{
+    setCode(e.target.value.replace(/\D/g,"").slice(0,6))
+  }
 
-  const handleVerify = async (code) => {
-    const success = await verify(code);
-    if (success) {
-      navigate("/");
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (code.length === 6) {
-      handleVerify(code);
-    }
-  };
-
+  const handleSubmit = async (e)=>{
+    if (e) e.preventDefault()
+      if(code.length === 6){
+        await verify(code)
+        navigate("/")
+        toast.success("Verification successful")
+      }
+  }
   return (
     <div className="container mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
       <div className="text-center">
