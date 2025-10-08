@@ -8,15 +8,29 @@ import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Verify from "./pages/Verify";
+import {Toaster} from "react-hot-toast"
+import { useAuthStore } from "./store/authStore";
+import { useEffect } from "react";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { RedirectRoute } from "./components/RedirectRoute";
+
+
 function App() {
+  const {checkAuth,isAuthenticated,user} = useAuthStore()
+  useEffect(()=>{
+    checkAuth()
+  },[checkAuth])
+
+  console.log("Authenticated",isAuthenticated)
+  console.log("user", user)
   return (
     <>
       <Router>
         <Routes>
           <Route path="/" element={<Home></Home>}></Route>
-          <Route path="/signin" element={<Login></Login>}></Route>
-          <Route path="/signup" element={<Signup></Signup>}></Route>
-          <Route path="/verify" element={<Verify></Verify>}></Route>
+          <Route path="/signin" element={<RedirectRoute><Login></Login></RedirectRoute>}></Route>
+          <Route path="/signup" element={<RedirectRoute><Signup></Signup></RedirectRoute>}></Route>
+          <Route path="/verify" element={<RedirectRoute><Verify></Verify></RedirectRoute>}></Route>
           <Route
             path="/forgot-password"
             element={<ForgotPassword></ForgotPassword>}
@@ -26,6 +40,7 @@ function App() {
             element={<ResetPassword></ResetPassword>}
           ></Route>
         </Routes>
+        <Toaster/>
       </Router>
     </>
   );
