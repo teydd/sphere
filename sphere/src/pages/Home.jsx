@@ -2,8 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import Globe from "globe.gl";
 import axios from "axios";
 import Nav from "../components/Nav";
+import { useAuthStore } from "../store/authStore";
+import WeatherTable from "./WeatherTable";
+import { Link } from "react-router-dom";
 
 const WeatherGlobe = () => {
+  const {isAuthenticated, user} = useAuthStore()
   const globeRef = useRef();
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState(null);
@@ -81,29 +85,28 @@ const WeatherGlobe = () => {
     fetchWeather();
 
     // ✅ Auto-detect user location on load
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (pos) => {
-          const lat = pos.coords.latitude;
-          const lon = pos.coords.longitude;
+     if (isAuthenticated && navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
 
-          try {
-            // reverse geocoding to get city name
-            const geoRes = await axios.get(
-              `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${apiKey}`,
-              { withCredentials: false }
-            );
-            const cityName = geoRes.data[0]?.name || "My Location";
-            await fetchCityWeather(lat, lon, cityName);
-          } catch (err) {
-            console.error("Reverse geocoding error:", err.message);
-            await fetchCityWeather(lat, lon, "My Location");
-          }
-        },
-        (err) => console.error("Location error:", err.message)
-      );
-    }
-  }, []);
+        try {
+          const geoRes = await axios.get(
+            `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${apiKey}`,
+            { withCredentials: false }
+          );
+          const cityName = geoRes.data[0]?.name || "My Location";
+          await fetchCityWeather(lat, lon, cityName);
+        } catch (err) {
+          console.error("Reverse geocoding error:", err.message);
+          await fetchCityWeather(lat, lon, "My Location");
+        }
+      },
+      (err) => console.error("Location error:", err.message)
+    );
+  }
+}, [isAuthenticated]);
 
   // suggestions
   const fetchSuggestions = async (query) => {
@@ -236,8 +239,18 @@ const WeatherGlobe = () => {
         <Nav />
       </div>
 
-      {/* 🔍 Search + Location */}
-      <div
+      {isAuthenticated && (
+  <div
+    style={{
+      position: "absolute",
+      top: "30px",
+      left: "50%",
+      transform: "translateX(-50%)",
+      zIndex: 2,
+      width: "260px",
+    }}
+  >
+    <div
         style={{
           position: "absolute",
           top: "30px",
@@ -298,6 +311,9 @@ const WeatherGlobe = () => {
           Use My Location
         </button>
       </div>
+  </div>
+)}
+
 
       {selectedCity && (
         <div
@@ -320,22 +336,42 @@ const WeatherGlobe = () => {
           <p>🤔 Feels Like: {selectedCity.feels}</p>
           <p>💧 Humidity: {selectedCity.humidity}</p>
           <p>☁ Condition: {selectedCity.condition}</p>
-          <button
+          <ul className="d-flex ">
+            <li className="nav-link">
+              <button className="btn btn-outline-danger m-1"
             onClick={() => setSelectedCity(null)}
-            style={{
-              marginTop: "10px",
-              padding: "5px 10px",
-              border: "none",
-              borderRadius: "4px",
-              background: "orange",
-              color: "black",
-              cursor: "pointer",
-            }}
+            
           >
             Close
           </button>
+            </li>
+            <li className="nav-link">
+              <Link to={"/dasboard"} className="btn btn-outline-light m-1">
+                More infromation
+              </Link>
+            </li>
+          </ul>
         </div>
       )}
+      {!isAuthenticated && (
+  <div
+    style={{
+      position: "absolute",
+      top: "100px",
+      left: "50%",
+      transform: "translateX(-50%)",
+      background: "rgba(0,0,0,0.7)",
+      color: "white",
+      padding: "1rem",
+      borderRadius: "8px",
+      zIndex: 2,
+      width: "300px",
+      textAlign: "center",
+    }}
+  >
+    <p>🔒 Please sign in to view weather from your location.</p>
+  </div>
+)}
     </div>
   );
 };
