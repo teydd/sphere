@@ -3,7 +3,6 @@ import Globe from "globe.gl";
 import axios from "axios";
 import Nav from "../components/Nav";
 import { useAuthStore } from "../store/authStore";
-import WeatherTable from "./WeatherTable";
 import { Link } from "react-router-dom";
 
 const WeatherGlobe = () => {
@@ -14,7 +13,7 @@ const WeatherGlobe = () => {
   const [searchCity, setSearchCity] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const globeInstance = useRef(null);
-  const apiKey = "3a5b06bae7471ab88a0e3f647fac9e55"; // 🔑 replace with yours
+  const apiKey = import.meta.env.VITE_REACT_APP_WEATHER_API_KEY; // 🔑 replace with yours
 
   useEffect(() => {
     const globe = Globe()(globeRef.current)
