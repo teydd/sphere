@@ -63,7 +63,8 @@ export default function Login() {
             onChange={handleChange}
             placeholder="Password"
           />
-          {error && <p className="text-danger">{error}</p>}
+          <br />
+          {error}
           <br />
           <Link className="nav-link text-center" to={"/forgot-password"}>
             Forgot Password?
