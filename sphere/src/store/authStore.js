@@ -47,7 +47,30 @@ export const useAuthStore = create((set)=>({
       const response = await axios.get(`${URL}/auth`)
       set({user:response.data.user, isAuthenticated:true,isCheckingAuth:false})
     } catch (error) {
-      set({error:null,isCheckingAuth:false,isAuthenticated:false})      
+      set({error:null,isCheckingAuth:false,isAuthenticated:false})
+      throw error      
     }
   },
+  forgot:async(email)=>{
+    set({isLoading:true,error:null,})
+    try {
+      const response = await axios.post(`${URL}/forgot-password`,{email})
+      set({
+        user:response.data.user,isLoading:false,isAuthenticated:true
+      })
+    } catch (error) {
+      set({error:"Error sending link to email",isLoading:false})
+      throw error    
+    }
+  },
+  resetPass:async(password,token)=>{
+    set({isLoading:true,error:null})
+    try {
+      const response = await axios.post(`${URL}/reset-password/${token}`,{password})
+      set({user:response.data.user,isLoading:false,isAuthenticated:true})
+    } catch (error) {
+      set({error:"Error reset pass", isLoading:false})
+      throw error
+    }
+  }
 }))
