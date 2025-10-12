@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useAuthStore } from "../store/authStore";
+import toast from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function ResetPassword() {
   const [form, setForm] = useState({
@@ -6,9 +9,22 @@ export default function ResetPassword() {
     confirmpass: "",
   });
 
-  const handleSubmit = (e) => {
+  const {resetPass,isLoading,error} = useAuthStore()
+  const {token} = useParams()
+  const navigate = useNavigate()
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("Submited", form);
+    const {password} = form
+    try {
+      if(form.password !== form.confirmpass){
+      return toast.error("Password should match")
+    }
+      await resetPass(password,token) 
+      navigate("/signin")     
+      toast.success("Password changed successfully")
+    } catch (error) {
+      
+    }
   };
 
   const handleOnchange = (e) => {
@@ -47,6 +63,7 @@ export default function ResetPassword() {
             onChange={handleOnchange}
             placeholder="Confirm Password"
           />{" "}
+          {error}
           <hr />
           <button className="btn btn-outline-dark w-100">Submit</button>
           <hr />
