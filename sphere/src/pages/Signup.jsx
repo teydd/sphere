@@ -1,35 +1,37 @@
 import React, { useState } from "react";
 import { useAuthStore } from "../store/authStore";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Signup() {
-  const [form,setForm] = useState({
-    email:"",
-    password:"",
-    name:""
-  })
-  const {signup,isLoading,error} = useAuthStore()
-  const navigate = useNavigate()
-  const handleSubmit = async(e)=>{
-    const {email,password,name} = form
-    e.preventDefault()
-   try {
-     await signup(email,password,name)
-     navigate("/verify")
-   } catch (error) {
-    console.log(error)
-   }
-  }
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    name: "",
+  });
+  const { signup, isLoading, error } = useAuthStore();
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    const { email, password, name } = form;
+    e.preventDefault();
+    try {
+      await signup(email, password, name);
+      navigate("/verify");
+      toast.success("Account created successfully")
+    } catch (error) {
+      console.log(error);
+      toast.error("Error creating an account")
+    }
+  };
 
-  const handleChange = (e)=>{
-    const {name,value} = e.target
-    setForm((prev)=>({
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
       ...prev,
-      [name]:value
-    }))
+      [name]: value,
+    }));
+  };
 
-  }
-  
   return (
     <>
       <div className="container mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
@@ -47,7 +49,7 @@ export default function Signup() {
         </Link>
         <p className="text-center">or</p>
         <hr />
-        <form onSubmit={handleSubmit} >
+        <form onSubmit={handleSubmit}>
           <input
             className="form-control"
             type="email"
@@ -56,6 +58,7 @@ export default function Signup() {
             onChange={handleChange}
             placeholder="Email"
             autoFocus
+            required
           />{" "}
           <br />
           <input
@@ -65,6 +68,7 @@ export default function Signup() {
             value={form.name}
             onChange={handleChange}
             placeholder="Name"
+            required
           />
           <br />
           <input
@@ -74,13 +78,13 @@ export default function Signup() {
             value={form.password}
             onChange={handleChange}
             placeholder="Password"
+            required
           />
-         {error}
+          {error}
           <hr />
           <button className="btn btn-outline-dark w-100">
-  {isLoading ? "Creating account..." : "Submit"}
-</button>
-
+            {isLoading ? "Creating account..." : "Submit"}
+          </button>
           <hr />
           <p className="text-center">
             Already have an account?{" "}
