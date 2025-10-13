@@ -65,7 +65,7 @@ export default function ResetPassword() {
           />{" "}
           {error}
           <hr />
-          <button className="btn btn-outline-dark w-100">Submit</button>
+          <button className="btn btn-outline-dark w-100">{isLoading ? "Resetting password" : "Submit"} </button>
           <hr />
         </form>
         <br />
