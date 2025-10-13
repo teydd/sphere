@@ -17,7 +17,7 @@ export const useAuthStore = create((set)=>({
       const response = await axios.post(`${URL}/signup`,{email,password,name})
       set({user:response.data.user,isAuthenticated:true,isLoading:false})
     } catch (error) {
-      set({error:error.response.data.message||"Error signing up",isLoading:false})
+      set({error:"Error signing up",isLoading:false})
       throw error      
     }
   },
@@ -56,7 +56,7 @@ export const useAuthStore = create((set)=>({
     try {
       const response = await axios.post(`${URL}/forgot-password`,{email})
       set({
-        user:response.data.user,isLoading:false,isAuthenticated:true
+        user:response.data.user,isLoading:false
       })
     } catch (error) {
       set({error:"Error sending link to email",isLoading:false})
@@ -69,7 +69,7 @@ export const useAuthStore = create((set)=>({
       const response = await axios.post(`${URL}/reset-password/${token}`,{password})
       set({user:response.data.user,isLoading:false,isAuthenticated:true})
     } catch (error) {
-      set({error:"Error reset pass", isLoading:false})
+      set({error:"Error reset pass",isLoading:false})
       throw error
     }
   }
