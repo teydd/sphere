@@ -58,7 +58,9 @@ const verify = async (req, res) => {
     user.verificationToken = undefined;
 
     await user.save();
+
     await welcomeEmail(user.name,user.email)
+    
     res.status(200).json({
       success: true,
       message: "Verified succesfully",
