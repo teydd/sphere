@@ -2,6 +2,7 @@ const User = require("../models/authModel");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const { generateTokeAndCookie } = require("../util/generateTokenAndCookie");
+const {sendVerificationEmail, welcomeEmail} = require("../Mail/resendMail");
 
 const signup = async (req, res) => {
   const { email, password, name } = req.body;
@@ -28,7 +29,7 @@ const signup = async (req, res) => {
     });
 
     await user.save();
-    generateTokeAndCookie(res, user);
+    await sendVerificationEmail(user.email,user.name,user.verificationToken)
 
     res.status(201).json({
       success: true,
@@ -57,7 +58,7 @@ const verify = async (req, res) => {
     user.verificationToken = undefined;
 
     await user.save();
-
+    await welcomeEmail(user.name,user.email)
     res.status(200).json({
       success: true,
       message: "Verified succesfully",
