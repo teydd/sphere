@@ -17,10 +17,10 @@ export default function Signup() {
     try {
       await signup(email, password, name);
       navigate("/verify");
-      toast.success("Account created successfully")
+      toast.success("Account created successfully");
     } catch (error) {
       console.log(error);
-      toast.error("Error creating an account")
+      toast.error("Error creating an account");
     }
   };
 
