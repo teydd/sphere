@@ -18,10 +18,10 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    role:{
-      type:String,
-      enum:["customer","admin"],
-      default:"customer"
+    role: {
+      type: String,
+      enum: ["customer", "admin"],
+      default: "customer",
     },
     verificationToken: String,
     verificationTokenExpiresAt: String,
