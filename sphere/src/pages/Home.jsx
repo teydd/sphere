@@ -6,7 +6,7 @@ import { useAuthStore } from "../store/authStore";
 import { Link } from "react-router-dom";
 
 const WeatherGlobe = () => {
-  const {isAuthenticated, user} = useAuthStore()
+  const { isAuthenticated, user } = useAuthStore();
   const globeRef = useRef();
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState(null);
@@ -84,28 +84,28 @@ const WeatherGlobe = () => {
     fetchWeather();
 
     // ✅ Auto-detect user location on load
-     if (isAuthenticated && navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        const lat = pos.coords.latitude;
-        const lon = pos.coords.longitude;
+    if (isAuthenticated && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
 
-        try {
-          const geoRes = await axios.get(
-            `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${apiKey}`,
-            { withCredentials: false }
-          );
-          const cityName = geoRes.data[0]?.name || "My Location";
-          await fetchCityWeather(lat, lon, cityName);
-        } catch (err) {
-          console.error("Reverse geocoding error:", err.message);
-          await fetchCityWeather(lat, lon, "My Location");
-        }
-      },
-      (err) => console.error("Location error:", err.message)
-    );
-  }
-}, [isAuthenticated]);
+          try {
+            const geoRes = await axios.get(
+              `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${apiKey}`,
+              { withCredentials: false }
+            );
+            const cityName = geoRes.data[0]?.name || "My Location";
+            await fetchCityWeather(lat, lon, cityName);
+          } catch (err) {
+            console.error("Reverse geocoding error:", err.message);
+            await fetchCityWeather(lat, lon, "My Location");
+          }
+        },
+        (err) => console.error("Location error:", err.message)
+      );
+    }
+  }, [isAuthenticated]);
 
   // suggestions
   const fetchSuggestions = async (query) => {
@@ -239,80 +239,79 @@ const WeatherGlobe = () => {
       </div>
 
       {isAuthenticated && (
-  <div
-    style={{
-      position: "absolute",
-      top: "30px",
-      left: "50%",
-      transform: "translateX(-50%)",
-      zIndex: 2,
-      width: "260px",
-    }}
-  >
-    <div
-        style={{
-          position: "absolute",
-          top: "30px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 2,
-          width: "260px",
-        }}
-      >
-        <div style={{ display: "flex", gap: "5px" }}>
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Search city..."
-            value={searchCity}
-            onChange={handleChange}
-          />
-          <button onClick={handleSearchSubmit} className="btn btn-info">
-            Search
-          </button>
-        </div>
-
-        {suggestions.length > 0 && (
-          <ul
+        <div
+          style={{
+            position: "absolute",
+            top: "30px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 2,
+            width: "260px",
+          }}
+        >
+          <div
             style={{
-              listStyle: "none",
-              padding: 0,
-              margin: 0,
-              background: "white",
-              border: "1px solid #ccc",
-              maxHeight: "150px",
-              overflowY: "auto",
               position: "absolute",
-              width: "100%",
-              zIndex: 3,
+              top: "30px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              zIndex: 2,
+              width: "260px",
             }}
           >
-            {suggestions.map((city, idx) => (
-              <li
-                key={idx}
-                onClick={() => handleSelectCity(city)}
+            <div style={{ display: "flex", gap: "5px" }}>
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Search city..."
+                value={searchCity}
+                onChange={handleChange}
+              />
+              <button onClick={handleSearchSubmit} className="btn btn-info">
+                Search
+              </button>
+            </div>
+
+            {suggestions.length > 0 && (
+              <ul
                 style={{
-                  padding: "8px",
-                  cursor: "pointer",
-                  borderBottom: "1px solid #eee",
+                  listStyle: "none",
+                  padding: 0,
+                  margin: 0,
+                  background: "white",
+                  border: "1px solid #ccc",
+                  maxHeight: "150px",
+                  overflowY: "auto",
+                  position: "absolute",
+                  width: "100%",
+                  zIndex: 3,
                 }}
               >
-                {city.name}, {city.country}
-              </li>
-            ))}
-          </ul>
-        )}
+                {suggestions.map((city, idx) => (
+                  <li
+                    key={idx}
+                    onClick={() => handleSelectCity(city)}
+                    style={{
+                      padding: "8px",
+                      cursor: "pointer",
+                      borderBottom: "1px solid #eee",
+                    }}
+                  >
+                    {city.name}, {city.country}
+                  </li>
+                ))}
+              </ul>
+            )}
 
-        <button
-          onClick={handleUseMyLocation}
-          className="btn btn-outline-light align-items-center justify-content-center w-100 m-1"
-        >
-          Use My Location
-        </button>
-      </div>
-  </div>
-)}
-
+            <button
+              onClick={handleUseMyLocation}
+              className="btn btn-outline-light align-items-center justify-content-center w-100 m-1"
+            >
+              Use My Location
+            </button>
+          </div>
+        </div>
+      )}
 
       {selectedCity && (
         <div
@@ -337,12 +336,12 @@ const WeatherGlobe = () => {
           <p>☁ Condition: {selectedCity.condition}</p>
           <ul className="d-flex ">
             <li className="nav-link">
-              <button className="btn btn-outline-danger m-1"
-            onClick={() => setSelectedCity(null)}
-            
-          >
-            Close
-          </button>
+              <button
+                className="btn btn-outline-danger m-1"
+                onClick={() => setSelectedCity(null)}
+              >
+                Close
+              </button>
             </li>
             <li className="nav-link">
               <Link to={"/dasboard"} className="btn btn-outline-light m-1">
@@ -353,24 +352,24 @@ const WeatherGlobe = () => {
         </div>
       )}
       {!isAuthenticated && (
-  <div
-    style={{
-      position: "absolute",
-      top: "100px",
-      left: "50%",
-      transform: "translateX(-50%)",
-      background: "rgba(0,0,0,0.7)",
-      color: "white",
-      padding: "1rem",
-      borderRadius: "8px",
-      zIndex: 2,
-      width: "300px",
-      textAlign: "center",
-    }}
-  >
-    <p>🔒 Please sign in to view weather from your location.</p>
-  </div>
-)}
+        <div
+          style={{
+            position: "absolute",
+            top: "100px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            background: "rgba(0,0,0,0.7)",
+            color: "white",
+            padding: "1rem",
+            borderRadius: "8px",
+            zIndex: 2,
+            width: "300px",
+            textAlign: "center",
+          }}
+        >
+          <p>🔒 Please sign in to view weather from your location.</p>
+        </div>
+      )}
     </div>
   );
 };
