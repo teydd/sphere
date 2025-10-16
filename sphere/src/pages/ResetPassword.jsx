@@ -9,22 +9,20 @@ export default function ResetPassword() {
     confirmpass: "",
   });
 
-  const {resetPass,isLoading,error} = useAuthStore()
-  const {token} = useParams()
-  const navigate = useNavigate()
-  const handleSubmit = async(e) => {
+  const { resetPass, isLoading, error } = useAuthStore();
+  const { token } = useParams();
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const {password} = form
+    const { password } = form;
     try {
-      if(form.password !== form.confirmpass){
-      return toast.error("Password should match")
-    }
-      await resetPass(password,token) 
-      navigate("/signin")     
-      toast.success("Password changed successfully")
-    } catch (error) {
-      
-    }
+      if (form.password !== form.confirmpass) {
+        return toast.error("Password should match");
+      }
+      await resetPass(password, token);
+      navigate("/signin");
+      toast.success("Password changed successfully");
+    } catch (error) {}
   };
 
   const handleOnchange = (e) => {
@@ -65,7 +63,9 @@ export default function ResetPassword() {
           />{" "}
           {error}
           <hr />
-          <button className="btn btn-outline-dark w-100">{isLoading ? "Resetting password" : "Submit"} </button>
+          <button className="btn btn-outline-dark w-100">
+            {isLoading ? "Resetting password" : "Submit"}{" "}
+          </button>
           <hr />
         </form>
         <br />
