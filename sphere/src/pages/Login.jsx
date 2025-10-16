@@ -2,35 +2,35 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 import { safeLogger } from "../../utils/safelogger";
-import {toast} from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 export default function Login() {
-  const [form,setForm] = useState({
-    email:"",
-    password:""
-  })
-  const {signin,error,isLoading} = useAuthStore()
-  const navigate = useNavigate()
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+  const { signin, error, isLoading } = useAuthStore();
+  const navigate = useNavigate();
 
-  const handleChange = (e)=>{
-    const {name,value} = e.target
-    setForm((prev)=>({
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
       ...prev,
-      [name]:value
-    }))
-  }
+      [name]: value,
+    }));
+  };
 
-  const handleSubmit = async(e)=>{
-    e.preventDefault()
-    const {email,password} = form
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password } = form;
     try {
-      await signin(email,password)
-      navigate("/")
-      toast.success("Log in sucessful")
+      await signin(email, password);
+      navigate("/");
+      toast.success("Log in sucessful");
     } catch (error) {
-      console.log(error)      
+      console.log(error);
     }
-  }
+  };
   return (
     <>
       <div className="container bg-whit mt-5 col-sm-6 col-md-6 col-lg-4 form rounded-5">
@@ -70,10 +70,9 @@ export default function Login() {
             Forgot Password?
           </Link>
           <hr />
-          <button className="btn btn-outline-dark w-100" >
-  {isLoading ? "Signing in..." : "Sign in"}
-</button>
-
+          <button className="btn btn-outline-dark w-100">
+            {isLoading ? "Signing in..." : "Sign in"}
+          </button>
           <hr />
           <p className="text-center">
             Don't have an account?{" "}
