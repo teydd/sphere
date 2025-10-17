@@ -6,7 +6,7 @@ import { useAuthStore } from "../store/authStore";
 import { Link } from "react-router-dom";
 
 const WeatherGlobe = () => {
-  const { isAuthenticated, user } = useAuthStore();
+  const { isAuthenticated, } = useAuthStore();
   const globeRef = useRef();
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState(null);
@@ -223,7 +223,7 @@ const WeatherGlobe = () => {
       <div
         className=""
         ref={globeRef}
-        style={{ width: "100%", height: "100%", background: "black" }}
+        style={{ width: "100px", height: "100%", background: "black" }}
       />
 
       <div
@@ -355,7 +355,7 @@ const WeatherGlobe = () => {
         <div
           style={{
             position: "absolute",
-            top: "100px",
+            top: "400px",
             left: "50%",
             transform: "translateX(-50%)",
             background: "rgba(0,0,0,0.7)",
@@ -363,7 +363,7 @@ const WeatherGlobe = () => {
             padding: "1rem",
             borderRadius: "8px",
             zIndex: 2,
-            width: "300px",
+            width: "150px",
             textAlign: "center",
           }}
         >
