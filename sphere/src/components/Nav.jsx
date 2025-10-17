@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 export default function Nav() {
+  const {isAuthenticated,logout } = useAuthStore()
   return (
     <>
       <nav className="navbar navbar-expand-sm">
@@ -28,12 +30,12 @@ export default function Nav() {
                 </Link>
               </li>
             </ul>
-            <Link
+            {isAuthenticated ? <button onClick={logout} className="btn bg-white border border-white  text-black float-end ">Logout</button> : <Link
               className="btn bg-white border border-white  text-black float-end"
               to={"/signin"}
             >
               Signin
-            </Link>
+            </Link> }
           </div>
         </div>
       </nav>
