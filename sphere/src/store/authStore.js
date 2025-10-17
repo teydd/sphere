@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const URL = "http://localhost:3000";
+const URL = import.meta.env.VITE_REACT_APP_SERVER_API
 axios.defaults.withCredentials = true;
 
 export const useAuthStore = create((set) => ({
