@@ -1,6 +1,7 @@
 const User = require("../models/authModel");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
+require("dotenv").config()
 const { generateTokeAndCookie } = require("../util/generateTokenAndCookie");
 const { sendVerificationEmail, welcomeEmail, resetPass, forgotPass } = require("../Mail/resendMail");
 
