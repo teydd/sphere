@@ -12,7 +12,8 @@ const generateTokeAndCookie = async (res, user) => {
 
   res.cookie("token", token, {
     httpOnly: true,
-    samesite: "Strict",
+    samesite: "none",
+    secure:true
   });
 };
 
