@@ -6,8 +6,14 @@ export default function Nav() {
   const {isAuthenticated,logout } = useAuthStore()
   return (
     <>
-      <nav className="navbar navbar-expand-sm">
+      <nav className="navbar  navbar-expand-sm">
         <div className="container-fluid">
+          <Link
+                  className="fs-1 text-white title text-decoration-none "
+                  to={"/"}
+                >
+                  Sphere
+                </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -19,19 +25,9 @@ export default function Nav() {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse " id="navbarNav">
-            <ul className="navbar-nav  w-100">
-              <li className="nav-item ">
-                <Link
-                  className="fs-1 text-white title text-decoration-none "
-                  to={"/"}
-                >
-                  Sphere
-                </Link>
-              </li>
-            </ul>
+          <div className="collapse navbar-collapse w-100 justify-content-end" id="navbarNav">
             {isAuthenticated ? <button onClick={logout} className="btn bg-white border border-white  text-black float-end ">Logout</button> : <Link
-              className="btn bg-white border border-white  text-black float-end"
+              className="btn bg-white border border-white  text-black"
               to={"/signin"}
             >
               Signin
