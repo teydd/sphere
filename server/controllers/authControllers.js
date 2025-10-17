@@ -2,7 +2,7 @@ const User = require("../models/authModel");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const { generateTokeAndCookie } = require("../util/generateTokenAndCookie");
-const { sendVerificationEmail, welcomeEmail } = require("../Mail/resendMail");
+const { sendVerificationEmail, welcomeEmail, resetPass, forgotPass } = require("../Mail/resendMail");
 
 const signup = async (req, res) => {
   const { email, password, name } = req.body;
@@ -29,7 +29,7 @@ const signup = async (req, res) => {
     });
 
     await user.save();
-    await sendVerificationEmail(user.email, user.name, user.verificationToken);
+    await sendVerificationEmail(user.email, user.verificationToken);
 
     res.status(201).json({
       success: true,
@@ -119,10 +119,11 @@ const forgotPassword = async (req, res) => {
     user.resetPasswordTokenExpiresAt = resetTokenExpiresAt;
 
     await user.save();
+    
+    await forgotPass (user.email, `${process.env.CLIENT_URL}/reset-password/${resetToken}`)
 
     res.status(200).json({
       message: "Link sent successfully",
-      ...user._doc,
       password: undefined,
     });
   } catch (error) {
@@ -153,6 +154,7 @@ const resetPassword = async (req, res) => {
     user.resetPasswordTokenExpiresAt = undefined;
 
     await user.save();
+    await resetPass(user.email)
 
     res.status(200).json({
       success: true,
