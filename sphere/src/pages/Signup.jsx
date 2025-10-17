@@ -45,13 +45,6 @@ export default function Signup() {
           </Link>
         </div>
         <p className="text-center pt-3">Sign up to continue with</p>
-        
-          <GoogleLogin className ="btn btn-sm"
-          onSuccess={(credentialResponse)=>{
-            console.log(credentialResponse)
-          }}
-          onError={()=>{console.log("Login Failed")}}
-          ></GoogleLogin>
         <p className="text-center">or</p>
         <hr />
         <form onSubmit={handleSubmit}>
