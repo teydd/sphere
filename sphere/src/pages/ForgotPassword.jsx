@@ -53,7 +53,7 @@ export default function ForgotPassword() {
           />{" "}
           <hr />
           {<p>{error}</p>}
-          <button className="btn btn-outline-dark w-100">Submit</button>
+          <button className="btn btn-outline-dark w-100">{isLoading? "Submitting" : "Submit"}</button>
           <hr />
         </form>
       ) : (
