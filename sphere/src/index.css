@@ -11,3 +11,6 @@ body {
 .form {
   background: rgba(44, 43, 43, 0.212);
 }
+.navbar-toggler-icon {
+  filter: invert(100%);
+}
