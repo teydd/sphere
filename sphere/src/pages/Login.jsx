@@ -65,13 +65,12 @@ export default function Login() {
           />
           <br />
           {error}
-          <br />
           <Link className="nav-link text-center" to={"/forgot-password"}>
             Forgot Password?
           </Link>
           <hr />
           <button className="btn btn-outline-dark w-100">
-            {isLoading ? "Signing in..." : "Sign in"}
+            {isLoading ? "Signing in" : "Sign in"}
           </button>
           <hr />
           <p className="text-center">
