@@ -13,7 +13,7 @@ const WeatherGlobe = () => {
   const [searchCity, setSearchCity] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const globeInstance = useRef(null);
-  const apiKey = import.meta.env.VITE_REACT_APP_WEATHER_API_KEY; // 🔑 replace with yours
+  const apiKey = import.meta.env.VITE_REACT_APP_WEATHER_API_KEY;
 
   useEffect(() => {
     const globe = Globe()(globeRef.current)
@@ -313,7 +313,7 @@ const WeatherGlobe = () => {
         </div>
       )}
 
-      {selectedCity && (
+      {selectedCity && isAuthenticated && (
         <div
           style={{
             position: "absolute",
