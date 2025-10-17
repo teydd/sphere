@@ -1,7 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Nav from "./components/Nav";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -11,7 +10,6 @@ import Verify from "./pages/Verify";
 import {Toaster} from "react-hot-toast"
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
-import { ProtectedRoute } from "./components/ProtectedRoute";
 import { RedirectRoute } from "./components/RedirectRoute";
 
 
@@ -33,11 +31,11 @@ function App() {
           <Route path="/verify" element={<RedirectRoute><Verify></Verify></RedirectRoute>}></Route>
           <Route
             path="/forgot-password"
-            element={<ForgotPassword></ForgotPassword>}
+            element={<RedirectRoute><ForgotPassword></ForgotPassword></RedirectRoute>}
           ></Route>
           <Route
             path="/reset-password/:token"
-            element={<ResetPassword></ResetPassword>}
+            element={<RedirectRoute><ResetPassword></ResetPassword></RedirectRoute>}
           ></Route>
         </Routes>
         <Toaster/>
