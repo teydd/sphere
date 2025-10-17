@@ -1,6 +1,6 @@
 const { Resend } = require("resend");
-const { PASSWORD_RESET_REQUEST_TEMPLATE, PASSWORD_RESET_SUCCESS_TEMPLATE, VERIFICATION_EMAIL_TEMPLATE } = require("./templates");
 require("dotenv").config();
+const { PASSWORD_RESET_REQUEST_TEMPLATE, PASSWORD_RESET_SUCCESS_TEMPLATE, VERIFICATION_EMAIL_TEMPLATE } = require("./templates");
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
