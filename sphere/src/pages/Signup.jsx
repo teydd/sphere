@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuthStore } from "../store/authStore";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { GoogleLogin } from "@react-oauth/google";
 
 export default function Signup() {
   const [form, setForm] = useState({
@@ -44,9 +45,13 @@ export default function Signup() {
           </Link>
         </div>
         <p className="text-center pt-3">Sign up to continue with</p>
-        <Link className="btn btn-outline-light w-100" to={"/google"}>
-          Google
-        </Link>
+        
+          <GoogleLogin className ="btn btn-sm"
+          onSuccess={(credentialResponse)=>{
+            console.log(credentialResponse)
+          }}
+          onError={()=>{console.log("Login Failed")}}
+          ></GoogleLogin>
         <p className="text-center">or</p>
         <hr />
         <form onSubmit={handleSubmit}>
